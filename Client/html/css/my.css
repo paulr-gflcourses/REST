@@ -1,0 +1,13 @@
+body{
+	background: rgb(250,250,220);
+}
+.main-form{
+	margin-top: 30px;
+	padding: 10px;
+}
+.form-group{
+	padding: 20px;
+}
+p{
+	padding: 10px;
+}
