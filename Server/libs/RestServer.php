@@ -5,8 +5,8 @@ class RestServer
     public function __construct()
     {
         $url = $_SERVER['REQUEST_URI'];
-        list($a, $b, $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 9);
-        $params = explode('/', $url, 9);
+        list($a2, $b, $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 6);
+        $params = explode('/', $url, 6);
         # use setMethod to map to a specific function
         # # GET /api/db/web/applist/test.com = getApplist(test.com)
         echo "<pre>";
