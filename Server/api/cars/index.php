@@ -6,8 +6,22 @@ include_once "../../config.php";
 class Cars
 {
 
-    public function getCarList()
+    public function getCars($params=false)
     {
+        if ($params)
+        {
+            $id = $params[0];
+            if (is_numeric($id))
+            {
+                return $this->getById($id);
+            }
+        }
+        echo "options:";
+        print_r($_GET);
+        if ($_GET['year'])
+        {
+            return $this->CarFilter();
+        }
         try
         {
             $mysql = new MySQL();
@@ -20,9 +34,9 @@ class Cars
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getById($param)
+    private function getById($param)
     {
-        $id = $param->id;
+        $id = $param;//->id;
         if ( !$id || !is_numeric($id) || $id<0)
         {
             throw new Exception(ERR_CAR_ID_INVALID);
@@ -40,17 +54,18 @@ class Cars
     }
 
 
-    public function CarFilter($data)
+    public function CarFilter()
     {
-        $year = $data->year;
-        $mark = $data->mark;
-        $model = $data->model;
-        $engine = $data->engine;
-        $color = $data->color;
-        $maxspeed = $data->maxspeed;
-        $price = $data->price;
+        $year = +$_GET['year'];
+        $mark = false;
+        $model = false;
+        $engine = false;
+        $color =  false;
+        $maxspeed =  false;
+        $price =  false;
 
-        var_dump($data);
+        //var_dump($data);
+        
         if (!$year || !is_integer($year) || $year<1930 || $year>2018)
         {
             throw new Exception(ERR_YEAR_INVALID); 
@@ -118,11 +133,11 @@ class Cars
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getCars($params = false)
+    /*public function getCars($params = false)
     {
         echo "GETTING CARS!";
         print_r($params);
-    }
+    }*/
 }
 
 $cars = new Cars();
