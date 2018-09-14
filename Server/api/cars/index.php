@@ -16,9 +16,9 @@ class Cars
                 return $this->getById($id);
             }
         }
-        echo "options:";
-        print_r($_GET);
-        if ($_GET['year'])
+        /*echo "options:";
+        print_r($_GET);*/
+        if (isset($_GET['filter']))
         {
             return $this->CarFilter();
         }
@@ -32,6 +32,22 @@ class Cars
             throw new Exception($e->getMessage());
         }
         return $result->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function postCars()
+    {
+        $id='';
+        return $id;
+    }
+
+    public function putCars($id)
+    {
+
+    }
+
+    public function deleteCars($id)
+    {
+
     }
 
     private function getById($param)
@@ -56,7 +72,8 @@ class Cars
 
     public function CarFilter()
     {
-        $year = +$_GET['year'];
+        $filer = $_GET['filter'];
+        $year = + $filer['year'];
         $mark = false;
         $model = false;
         $engine = false;
@@ -133,13 +150,10 @@ class Cars
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
-    /*public function getCars($params = false)
-    {
-        echo "GETTING CARS!";
-        print_r($params);
-    }*/
+    
+    
+
 }
 
 $cars = new Cars();
 $server = new RestServer($cars);
-//echo "hello server/api/cars";

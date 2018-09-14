@@ -1,26 +1,26 @@
-const url=`http://192.168.0.15/~user12/soap/task2/client/index.php`;
+// const url=`http://192.168.0.15/~user12/soap/task2/client/index.php`;
+const url=`http://127.0.0.1/my/courses/soap/task2/client/index.php`;
+
+// const root=`http://192.168.0.15/~user12/REST/Client/`;
+//const root=`http://127.0.0.1/my/courses/REST/Client/api/`;
 let results = document.getElementById("results");
 
 function getCarList() {
-    let formData = {
-        'action': 'getCarList'
-    };
-    $.post(url, formData, function (data) {
+    let url = 'api/cars/.json';
+    $.get(url,  function (data) {
         showOnTable(data)
     }, "json");
 }
 
 function getDetails(id) {
-    let formData = {
-        'action': 'getById',
-        'id': id
-    };
-    $.post(url, formData, function (data) {
+    let url = 'api/cars/'+id+'/.json';
+    $.get(url, function (data) {
         showOnDetails(data)
     }, "json");
 }
 
 function searchCars() {
+    let url = 'api/cars/.json';
     let formData = {
         'filter': {
             'mark': $('select[name=mark]').val(),
@@ -31,20 +31,20 @@ function searchCars() {
             'maxspeed': $('input[name=maxspeed]').val(),
             'price': $('input[name=price]').val(),
         },
-        'action': 'searchCars'
+        //'action': 'searchCars'
     };
-    $.post(url, formData, function (data) {
+    $.get(url, formData, function (data) {
         showOnTable(data);
     }, "json");
 
 }
 
 function order() {
-
+    let url = 'api/orders/';
     let formData = {
         'action': 'order',
         'orderData': {
-            'idcar': $('input[name=id]').val(),
+            'idcar': $('input[name=order-car-id]').val(),
             'firstname': $('input[name=name]').val(),
             'lastname': $('input[name=surname]').val(),
             'payment': $('select[name=paytype]').val(),
@@ -52,6 +52,8 @@ function order() {
     };
     if (formData.orderData.firstname && formData.orderData.lastname){
         $.post(url, formData, function (data) {
+            document.getElementById("order-form").style.display = 'none';
+            results.style.display = 'block';
             if (data['errors']) {
                 results.innerHTML = '<h3 class="text-danger">Error: ' + data.errors + '</h3>';
             } else {
@@ -73,13 +75,17 @@ function order() {
 }
 
 function getOrderForm(id) {
-    let formData = {
+    /*let formData = {
         'action': 'getOrderForm',
         'id': id
     };
     $.post(url, formData, function (data) {
         results.innerHTML = data;
-    }, "html");
+    }, "html");*/
+    document.getElementById("order-car-id").value = id;
+    document.getElementById("order-form").style.display = 'block';
+    results.style.display = 'none';
+
 }
 
 function showOnTable(data) {

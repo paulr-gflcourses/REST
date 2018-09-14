@@ -1,11 +1,11 @@
 <?php
 
 require_once 'config.php';
-require_once 'libs/CarClient.php';
+//require_once 'libs/CarClient.php';
 
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Headers: *');
-
+/*
 if (isset($_POST['action'])) 
 {
     header('Content-Type: application/json');
@@ -45,5 +45,6 @@ if (isset($_POST['action']))
     header('Content-Type: text/html');
     require_once TEMPLATE;
 }
-
+*/
+require_once TEMPLATE;
 ?>

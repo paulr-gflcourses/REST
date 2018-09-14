@@ -11,7 +11,7 @@
     <body>
 
         <div class="container">
-            <h1>Car Service<small> (SOAP) </small></h1>
+            <h1>Car Service<small> (REST) </small></h1>
 
             <form name="carform" id="carform" action="javascript:void(0);">
                 <div class="form-group ">
@@ -115,6 +115,38 @@
 
                 </table>
             </div>
+
+
+<div class="order-form" id="order-form" style="display: none;">
+
+<h2>Pre order car</h2>
+
+<div class="row">
+    <div name="carorder" class="col-lg-5" id="carorder">
+        <input type="hidden" name="order-car-id" id="order-car-id" value=""/>
+
+        <label for="name">Name</label>
+        <input type="text" class="form-control"
+                           name="name" id="name" value="" placeholder="Enter your Name">
+
+        <label for="surname">Surname</label>
+        <input type="text" class="form-control"
+                           name="surname" id="surname" value="" placeholder="Enter your Surname">
+
+        <label for="paytype">Select type pay</label>
+        <select class="form-control" name="paytype" id="paytype">
+            <option value="credit card">Credit card</option>
+            <option value="cash">Cash</option>
+        </select>
+        <button type="submit" class="btn btn-warning"
+                              onclick="order()">Order</button>
+
+        <div class="text-danger" id="errorsOrderForm"></div>
+    </div>
+</div>
+
+</div>
+
 
         </div>
 
