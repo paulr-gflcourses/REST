@@ -12,6 +12,12 @@ class Orders
         
     }
 
+    public function postOrders2()
+    {
+        header('Content-Type: application/json');
+        $ar = ['errors'=>'All is good!'];
+        return json_encode($ar);
+    }
     public function postOrders()
     {
         $order = $_POST['order'];
@@ -22,7 +28,8 @@ class Orders
         
         if ( !$idcar || !is_numeric($idcar) || $idcar<0)
         {
-            throw new Exception("Server",ERR_CAR_ID_INVALID);
+            //throw new Exception("Server",ERR_CAR_ID_INVALID);
+            throw new Exception("idcar invalid: idcar = $idcar");
         }
         if ($type_pay!="cash" && $type_pay!="credit card"){
             throw new Exception(ERR_PAYMENT_TYPE_INVALID);

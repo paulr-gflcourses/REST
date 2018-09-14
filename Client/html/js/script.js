@@ -60,7 +60,7 @@ function order() {
                 let id = data.id;
                 results.innerHTML = "<h3 class='text-success'>The car with id=" + id + " is successfully ordered!</h3>";
             }
-        }, "json");
+        }, "text");
     }else{
         let errorMsg="";
         if (!formData.orderData.firstname){

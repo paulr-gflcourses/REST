@@ -13,10 +13,10 @@ class RestServer
     {
         $this->service = $service;
         $url = $_SERVER['REQUEST_URI'];
-        list($b, $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 8);
-        $params = explode('/', $url, 8);
-        // list( $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 7);
-        // $params = explode('/', $url, 7);
+        //list($b, $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 8);
+        //$params = explode('/', $url, 8);
+         list( $c, $s, $a, $d, $db, $table, $path) = explode('/', $url, 7);
+         $params = explode('/', $url, 7);
 
         $method = $_SERVER['REQUEST_METHOD'];
         $funcName = ucfirst($table);
@@ -44,7 +44,6 @@ class RestServer
 
     private function setMethod($funcName, $param = false)
     {
-;
         $ret = false;
         if (method_exists($this->service, $funcName)) {
             $ret = call_user_func([$this->service, $funcName], $param);
@@ -55,7 +54,8 @@ class RestServer
     private function show_results($result, $viewType)
     {
         header('Access-Control-Allow-Origin: *');
-        switch ($viewType) {
+        switch ($viewType) 
+        {
             case '.json':
                 header('Content-Type: application/json');
                 echo json_encode($result);
