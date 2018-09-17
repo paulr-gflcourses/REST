@@ -1,4 +1,20 @@
-RewriteEngine On 
-RewriteBase /api/ 
-RewriteRule (.*) http://192.168.0.15/~user12/REST/Server/api/$1 [P]
-#RewriteRule (.*) http://127.0.0.1/my/courses/REST/Server/api/$1 [P]
+<Limit GET POST PUT DELETE>
+    Allow from all
+</Limit>
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /api/
+RewriteRule (.*) http://127.0.0.1/my/courses/REST/Server/api/$1 [P]
+#RewriteRule (.*) http://192.168.0.15/~user12/REST/Server/api/$1 [P]
+</IfModule>
+
+
+# <Limit GET POST PUT DELETE>
+#     Allow from all
+# </Limit>
+
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteBase /api/ 
+#     RewriteRule (.*) http://127.0.0.1/my/courses/REST/Server/api/$1 [P] 
+# </IfModule>

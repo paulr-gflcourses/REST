@@ -1,11 +1,12 @@
-// const url=`http://192.168.0.15/~user12/soap/task2/client/index.php`;
-const url=`http://127.0.0.1/my/courses/soap/task2/client/index.php`;
-
-// const root=`http://192.168.0.15/~user12/REST/Client/`;
-//const root=`http://127.0.0.1/my/courses/REST/Client/api/`;
 let results = document.getElementById("results");
+let orderForm = document.getElementById("order-form");
+let userInfo = document.getElementById("user-info");
+let loginForm = document.getElementById("login");
+let registrationForm = document.getElementById("registration");
 
 function getCarList() {
+    results.style.display = 'block';
+    orderForm.style.display = 'none';
     let url = 'api/cars/.json';
     $.get(url,  function (data) {
         showOnTable(data)
@@ -20,6 +21,8 @@ function getDetails(id) {
 }
 
 function searchCars() {
+    results.style.display = 'block';
+    orderForm.style.display = 'none';
     let url = 'api/cars/.json';
     let formData = {
         'filter': {
@@ -31,7 +34,6 @@ function searchCars() {
             'maxspeed': $('input[name=maxspeed]').val(),
             'price': $('input[name=price]').val(),
         },
-        //'action': 'searchCars'
     };
     $.get(url, formData, function (data) {
         showOnTable(data);
@@ -52,7 +54,7 @@ function order() {
     };
     if (formData.orderData.firstname && formData.orderData.lastname){
         $.post(url, formData, function (data) {
-            document.getElementById("order-form").style.display = 'none';
+           orderForm.style.display = 'none';
             results.style.display = 'block';
             if (data['errors']) {
                 results.innerHTML = '<h3 class="text-danger">Error: ' + data.errors + '</h3>';
@@ -75,17 +77,78 @@ function order() {
 }
 
 function getOrderForm(id) {
-    /*let formData = {
-        'action': 'getOrderForm',
-        'id': id
-    };
-    $.post(url, formData, function (data) {
-        results.innerHTML = data;
-    }, "html");*/
     document.getElementById("order-car-id").value = id;
-    document.getElementById("order-form").style.display = 'block';
+    orderForm.style.display = 'block';
     results.style.display = 'none';
+}
 
+function login(){
+    let url = 'api/users/';
+
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        dataType: 'json',
+        success: function(response) {
+            $('span[name=infoUsername]').text(response.username);
+            loginForm.style.display = 'none';
+            userInfo.style.display = 'block';
+        }
+     });
+}
+
+function logout(){
+    let url = 'api/users/';
+
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'json',
+        beforeSend: function(xhr){
+            xhr.setRequestHeader('HTTP/1.0 401 Unauthorized');
+        },
+        statusCode: {
+            401: function() {
+                loginForm.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+          },
+        success: function(response) {
+            loginForm.style.display = 'block';
+            userInfo.style.display = 'none';
+        },
+        error: function(response){
+            if (response.status==401){
+                loginForm.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+        }
+     });
+}
+
+function getRegisterForm(){
+    $('#registration').show();
+    $('#login').hide();
+    
+}
+
+function register(){
+    let url = 'api/users/';
+    let formData = $('#registrationForm').serializeArray();
+    $.post(url, formData, function (data) {
+        $('#registration').hide();
+                $('#login').show();
+    }, "text");
+    // $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     data: data,
+    //     dataType: 'json',
+    //     success: function(response) {
+    //         $('#registration').hide();
+    //         $('#login').show();
+    //     }
+    //  });
 }
 
 function showOnTable(data) {

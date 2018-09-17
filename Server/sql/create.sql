@@ -19,3 +19,11 @@ CREATE TABLE Orders (
     PRIMARY KEY (id),
     FOREIGN KEY (idcar) REFERENCES Cars(id)
 );
+
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT, 
+    username VARCHAR(100),
+    password VARCHAR(100),
+    PRIMARY KEY (id)
+
+);

@@ -16,11 +16,10 @@ class Cars
                 return $this->getById($id);
             }
         }
-        /*echo "options:";
-        print_r($_GET);*/
+
         if (isset($_GET['filter']))
         {
-            return $this->CarFilter();
+            return $this->CarFilter($_GET['filter']);
         }
         try
         {
@@ -36,8 +35,7 @@ class Cars
 
     public function postCars()
     {
-        $id='';
-        return $id;
+
     }
 
     public function putCars($id)
@@ -50,9 +48,9 @@ class Cars
 
     }
 
-    private function getById($param)
+    private function getById($id)
     {
-        $id = $param;//->id;
+        
         if ( !$id || !is_numeric($id) || $id<0)
         {
             throw new Exception(ERR_CAR_ID_INVALID);
@@ -70,20 +68,17 @@ class Cars
     }
 
 
-    public function CarFilter()
+    public function CarFilter($filter)
     {
-        $filer = $_GET['filter'];
-        $year = + $filer['year'];
-        $mark = false;
-        $model = false;
-        $engine = false;
-        $color =  false;
-        $maxspeed =  false;
-        $price =  false;
-
-        //var_dump($data);
+        $year = $filter['year'];
+        $mark = $filter['mark'];
+        $model = $filter['model'];
+        $engine = $filter['engine'];
+        $color =  $filter['color'];
+        $maxspeed = $filter['maxspeed'];
+        $price = $filter['price'];
         
-        if (!$year || !is_integer($year) || $year<1930 || $year>2018)
+        if (!$year || !is_numeric($year) || !is_integer(+$year) || +$year<1930 || +$year>2018)
         {
             throw new Exception(ERR_YEAR_INVALID); 
         }

@@ -20,11 +20,15 @@ class Orders
     }
     public function postOrders()
     {
-        $order = $_POST['order'];
+        if (isset($_POST['orderData']))
+        {
+            $order = $_POST['orderData'];
         $idcar = $order['idcar'];
         $type_pay = $order['payment'];
         $cust_name = $order['firstname'];
         $cust_surname = $order['lastname'];
+        }
+        
         
         if ( !$idcar || !is_numeric($idcar) || $idcar<0)
         {
@@ -54,7 +58,7 @@ class Orders
         {
             throw new Exception($e->getMessage()); 
         }
-        return (object) ['id'=>$idcar];
+        return ['id'=>$idcar];
         
     }
 
